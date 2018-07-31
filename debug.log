@@ -1,0 +1,3 @@
+[0704/105214.110:ERROR:file_io_win.cc(161)] CreateFile C:\Users\sun\AppData\Local\Temp\scoped_dir4836_32380\Crashpad\settings.dat: 系统找不到指定的路径。 (0x3)
+[0704/105214.110:ERROR:file_io_win.cc(170)] CreateFile C:\Users\sun\AppData\Local\Temp\scoped_dir4836_32380\Crashpad\reports\55cd0d0e-eea8-4ed9-93ee-61e11b7a6662.dmp: 系统找不到指定的路径。 (0x3)
+[0704/105214.110:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
