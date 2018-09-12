@@ -23,7 +23,7 @@ def getUser(screen_name):
     # print("photo",user.profile_image_url)
     # request.urlretrieve(user.profile_image_url,'img/'+screen_name+'.jpg')
 
-    file = open("Army_Following.txt","r")
+    file = open("Relation/Army_Following.txt","r")
     name_set = set()
     lines = file.readlines()
 
