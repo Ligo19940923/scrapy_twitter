@@ -57,13 +57,13 @@ DOWNLOADER_MIDDLEWARES = {
 #     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
 #     'scrapy_twitter.middlewares.ProxyMiddleware':100,
 
-
+    # 设置中间件顺序
     'scrapy_twitter.middlewares.SeleniumMiddleware':128,
-    # 'scrapy_twitter.middlewares.COOKIESPOOL':127,
-    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware':123,
-    # 'scrapy_twitter.middlewares.IPPOOLS':124,
-    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware' : 125,
-    # 'scrapy_twitter.middlewares.UAPOOLS':126
+    'scrapy_twitter.middlewares.COOKIESPOOL':127,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware':123,
+    'scrapy_twitter.middlewares.IPPOOLS':124,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware' : 125,
+    'scrapy_twitter.middlewares.UAPOOLS':126
 }
 
 # Enable or disable extensions

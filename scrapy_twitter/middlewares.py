@@ -9,11 +9,13 @@ from scrapy.http import HtmlResponse
 import random
 from scrapy.downloadermiddlewares.httpproxy import HttpProxyMiddleware #代理ip，这是固定的导入
 from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware #代理UA，固定导入
-
 import time
+
+
 class SeleniumMiddleware(object):
     def __init__(self):
         self.driver = webdriver.Chrome(executable_path='C:\\Users\\sun\\Desktop\\scrapy_twitter\\scrapy_twitter\\chromedriver.exe')
+    # 滚动条下拉实现
     def process_request(self,request,spider):
         # cookie = [{'domain': '.twitter.com', 'expiry': 1530085401.300973, 'httpOnly': False, 'name': 'ct0', 'path': '/', 'secure': True, 'value': 'd5f80e7c0ee0231beeae60c0175d2fe1'}, {'domain': '.twitter.com', 'expiry': 1593135797.959365, 'httpOnly': False, 'name': 'guest_id', 'path': '/', 'secure': False, 'value': 'v1%3A153006380223594077'}, {'domain': 'twitter.com', 'httpOnly': False, 'name': 'lang', 'path': '/', 'secure': False, 'value': 'zh-cn'}, {'domain': '.twitter.com', 'expiry': 1593135797.959303, 'httpOnly': False, 'name': 'personalization_id', 'path': '/', 'secure': False, 'value': '"v1_t3JE6S8XqAmwq/5QRiKQvw=="'}, {'domain': '.twitter.com', 'expiry': 1845423893.713683, 'httpOnly': False, 'name': 'twid', 'path': '/', 'secure': True, 'value': '"u=946989804738134018"'}, {'domain': '.twitter.com', 'expiry': 1530150315, 'httpOnly': False, 'name': '_gid', 'path': '/', 'secure': False, 'value': 'GA1.2.1108956550.1530063812'}, {'domain': '.twitter.com', 'expiry': 1530063975, 'httpOnly': False, 'name': '_gat', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.twitter.com', 'expiry': 1593135915, 'httpOnly': False, 'name': '_ga', 'path': '/', 'secure': False, 'value': 'GA1.2.1701889818.1530063812'}, {'domain': '.twitter.com', 'expiry': 1845423893.71331, 'httpOnly': False, 'name': 'ads_prefs', 'path': '/', 'secure': False, 'value': '"HBERAAA="'}, {'domain': '.twitter.com', 'expiry': 1577324693.713437, 'httpOnly': True, 'name': 'kdt', 'path': '/', 'secure': True, 'value': 'CFv4GDH2JaiNKWsQ99WrOou5NoPdm5Jlk9eyXSuX'}, {'domain': '.twitter.com', 'expiry': 1845423893.713511, 'httpOnly': False, 'name': 'remember_checked_on', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.twitter.com', 'httpOnly': True, 'name': '_twitter_sess', 'path': '/', 'secure': True, 'value': 'BAh7CiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%250ASGFzaHsABjoKQHVzZWR7ADoPY3JlYXRlZF9hdGwrCHXa6D5kAToMY3NyZl9p%250AZCIlMDZhZTQ5YjBkOTE3YjYxODNjM2RiNjM0YjdmYjlkOWY6B2lkIiVlZDRk%250AOTAwODY0ZjQzMDQxZDlkMjQyODYxNWI1NzE1YzoJdXNlcmwrCQJAVcU1YiQN--07ed2b8bc7238d0134a8edeaee68c00daf4e8250'}, {'domain': '.twitter.com', 'expiry': 1845423893.713734, 'httpOnly': True, 'name': 'auth_token', 'path': '/', 'secure': True, 'value': 'f2a7fe371dd4f7266afc8d22ab381cf1cd0298b0'}, {'domain': '.twitter.com', 'expiry': 1561513494.033226, 'httpOnly': True, 'name': 'csrf_same_site_set', 'path': '/', 'secure': True, 'value': '1'}, {'domain': '.twitter.com', 'expiry': 1561599894.03333, 'httpOnly': True, 'name': 'csrf_same_site', 'path': '/', 'secure': True, 'value': '1'}]
         print(request.cookies)
@@ -35,11 +37,10 @@ class SeleniumMiddleware(object):
             else:
                 Old_Text_height = New_Text_height
             time.sleep(1)
-
-
-
         return HtmlResponse(url=request.url,body=self.driver.page_source,request=request,encoding='utf-8',status=200)
 
+
+# IP池设置
 class IPPOOLS(HttpProxyMiddleware):
     ip_pools = [
         {'ip': '101.96.10.5:80'},
@@ -59,6 +60,9 @@ class IPPOOLS(HttpProxyMiddleware):
         except Exception as e:
             print(e)
             pass
+
+
+#代理池设置
 class UAPOOLS(UserAgentMiddleware):
     user_agent_pools = [
         'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3',
@@ -83,6 +87,9 @@ class UAPOOLS(UserAgentMiddleware):
         except Exception as e:
             print(e)
             pass
+
+
+# cookie池设置
 class COOKIESPOOL(object):
     cookies_pool=[
         {'cookie':[{'domain': 'twitter.com', 'httpOnly': False, 'name': 'lang', 'path': '/', 'secure': False, 'value': 'en'}, {'domain': '.twitter.com', 'expiry': 1593331832.180842, 'httpOnly': False, 'name': 'personalization_id', 'path': '/', 'secure': False, 'value': '"v1_o78m8kdsEkkjDtGqmzKCLQ=="'}, {'domain': '.twitter.com', 'expiry': 1845619856.72932, 'httpOnly': False, 'name': 'dnt', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.twitter.com', 'expiry': 1530281433.320839, 'httpOnly': False, 'name': 'ct0', 'path': '/', 'secure': True, 'value': '5b245b9645a1a81a9f83ee72d1ef8e2b'}, {'domain': '.twitter.com', 'expiry': 1593331832.180973, 'httpOnly': False, 'name': 'guest_id', 'path': '/', 'secure': False, 'value': 'v1%3A153025984587797331'}, {'domain': '.twitter.com', 'expiry': 1593331846, 'httpOnly': False, 'name': '_ga', 'path': '/', 'secure': False, 'value': 'GA1.2.166039280.1530259840'}, {'domain': '.twitter.com', 'expiry': 1530259899, 'httpOnly': False, 'name': '_gat', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.twitter.com', 'expiry': 1845619842.748142, 'httpOnly': False, 'name': 'twid', 'path': '/', 'secure': True, 'value': '"u=1001450500112306178"'}, {'domain': '.twitter.com', 'expiry': 1530346246, 'httpOnly': False, 'name': '_gid', 'path': '/', 'secure': False, 'value': 'GA1.2.995642488.1530259840'}, {'domain': '.twitter.com', 'expiry': 1845619842.747977, 'httpOnly': False, 'name': 'ads_prefs', 'path': '/', 'secure': False, 'value': '"HBESAAA="'}, {'domain': '.twitter.com', 'expiry': 1577520642.748053, 'httpOnly': True, 'name': 'kdt', 'path': '/', 'secure': True, 'value': 'avp093wd1vexX2iLacv2jndiM4gLjEAJNynPLBeq'}, {'domain': '.twitter.com', 'expiry': 1845619842.748086, 'httpOnly': False, 'name': 'remember_checked_on', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.twitter.com', 'httpOnly': True, 'name': '_twitter_sess', 'path': '/', 'secure': True, 'value': 'BAh7CiIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%250ASGFzaHsABjoKQHVzZWR7ADoPY3JlYXRlZF9hdGwrCDA3mEpkAToMY3NyZl9p%250AZCIlZTliNGYwZGEwMDQ4YTRhYzNjN2RkMjNkY2IyYTg2NDI6B2lkIiVjNTAw%250AZTY4MzBkMTY4ODdmMTk2NjIyYWJhNzgxZWE3NjoJdXNlcmwrCQLQVIfs3eUN--a2a98a15a69c5e2a2c3f4f74dd806fae45d0275c'}, {'domain': '.twitter.com', 'expiry': 1845619842.748162, 'httpOnly': True, 'name': 'auth_token', 'path': '/', 'secure': True, 'value': '387a3c1b6bec20092cbffc73925888d8dda2f35c'}, {'domain': '.twitter.com', 'expiry': 1561709443.057975, 'httpOnly': True, 'name': 'csrf_same_site_set', 'path': '/', 'secure': True, 'value': '1'}, {'domain': '.twitter.com', 'expiry': 1561795843.05803, 'httpOnly': True, 'name': 'csrf_same_site', 'path': '/', 'secure': True, 'value': '1'}]},
